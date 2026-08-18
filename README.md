@@ -9,10 +9,11 @@ Two interaction modes are available:
 
 ## Run locally
 
-Open `index.html` in a browser or serve the directory with any static HTTP server.
+Built with Next.js (App Router).
 
 ```bash
-npx serve .
+npm install
+npm run dev
 ```
 
 ## Question set
@@ -30,4 +31,4 @@ npx serve .
 
 ## Deployment
 
-The project is a static site and requires no build command. It can be deployed directly from the repository root on Vercel.
+The project is a Next.js app and deploys directly from the repository root on Vercel (build command `next build`).

@@ -74,6 +74,7 @@ const feedback = document.querySelector("#feedback");
 const progressTrack = document.querySelector(".progress-track");
 const progressBar = document.querySelector("#progress-bar");
 const timer = document.querySelector("#timer");
+const questionTimer = document.querySelector("#question-timer");
 
 let currentQuestion = 0;
 let correctAnswers = 0;
@@ -81,6 +82,9 @@ let answerTimes = [];
 let questionStartedAt = 0;
 let trainingStartedAt = 0;
 let timerId;
+let autoAdvanceId;
+let selectedMode = "classic";
+let totalElapsedSeconds = 0;
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
@@ -89,18 +93,22 @@ function formatTime(totalSeconds) {
 }
 
 function updateTimer() {
-  timer.textContent = formatTime(Math.floor((Date.now() - trainingStartedAt) / 1000));
+  totalElapsedSeconds = Math.floor((Date.now() - trainingStartedAt) / 1000);
+  timer.textContent = formatTime(totalElapsedSeconds);
+  questionTimer.textContent = formatTime(Math.floor((performance.now() - questionStartedAt) / 1000));
 }
 
 function startTraining() {
   currentQuestion = 0;
   correctAnswers = 0;
   answerTimes = [];
+  selectedMode = document.querySelector('input[name="mode"]:checked').value;
   trainingStartedAt = Date.now();
   setup.hidden = true;
   result.hidden = true;
   quiz.hidden = false;
   clearInterval(timerId);
+  clearTimeout(autoAdvanceId);
   timerId = setInterval(updateTimer, 1000);
   updateTimer();
   showQuestion();
@@ -127,7 +135,14 @@ function showQuestion() {
   });
 
   questionStartedAt = performance.now();
+  questionTimer.textContent = "00:00";
   answersContainer.querySelector("button")?.focus();
+}
+
+function goToNextQuestion() {
+  currentQuestion += 1;
+  if (currentQuestion < questions.length) showQuestion();
+  else showResult();
 }
 
 function selectAnswer(selectedIndex) {
@@ -147,12 +162,20 @@ function selectAnswer(selectedIndex) {
   feedback.innerHTML = `<strong>${isCorrect ? "Правильно!" : "Майже!"}</strong>${question.explanation}`;
   feedback.hidden = false;
   nextButton.textContent = currentQuestion === questions.length - 1 ? "Переглянути результат" : "Наступне завдання";
-  nextButton.hidden = false;
-  nextButton.focus();
+  nextButton.hidden = selectedMode === "ultimate";
+
+  if (selectedMode === "ultimate") {
+    feedback.insertAdjacentHTML("beforeend", '<span class="auto-advance-note">Наступне завдання відкриється автоматично…</span>');
+    autoAdvanceId = setTimeout(goToNextQuestion, 1400);
+  } else {
+    nextButton.focus();
+  }
 }
 
 function showResult() {
   clearInterval(timerId);
+  clearTimeout(autoAdvanceId);
+  updateTimer();
   quiz.hidden = true;
   result.hidden = false;
   progressBar.style.width = "100%";
@@ -170,14 +193,11 @@ function showResult() {
   document.querySelector("#correct-stat").textContent = `${correctAnswers}/${questions.length}`;
   document.querySelector("#time-stat").textContent = `${averageTime.toFixed(1).replace(".", ",")} с`;
   document.querySelector("#percent-stat").textContent = `${percent}%`;
+  document.querySelector("#total-time-stat").textContent = formatTime(totalElapsedSeconds);
   restartButton.focus();
 }
 
-nextButton.addEventListener("click", () => {
-  currentQuestion += 1;
-  if (currentQuestion < questions.length) showQuestion();
-  else showResult();
-});
+nextButton.addEventListener("click", goToNextQuestion);
 
 startButton.addEventListener("click", startTraining);
 restartButton.addEventListener("click", startTraining);

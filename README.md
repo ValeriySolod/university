@@ -1,6 +1,11 @@
 # Math Sprint
 
-An interactive Ukrainian-language elementary mathematics trainer with ten multiple-choice questions, immediate explanations, progress tracking, and final performance statistics.
+An interactive Ukrainian-language elementary mathematics trainer with ten multiple-choice questions, immediate explanations, live task and total timers, progress tracking, and final performance statistics.
+
+Two interaction modes are available:
+
+- **Classic** keeps the explanation visible until the learner clicks the next button.
+- **Ultimate** shows the explanation briefly and advances automatically after each answer.
 
 ## Run locally
 

@@ -1,11 +1,25 @@
-export default function SetupCard({ hidden, modeChoice, onModeChoiceChange, onStart, totalQuestions }) {
+import { topics } from "@/lib/topics";
+
+export default function SetupCard({
+  hidden,
+  modeChoice,
+  onModeChoiceChange,
+  topicChoice,
+  onTopicChoiceChange,
+  onStart,
+  totalQuestions,
+}) {
   return (
     <div className="setup-card" hidden={hidden}>
       <div className="field-group">
         <label htmlFor="topic">Тема</label>
         <div className="select-wrap">
-          <select id="topic" defaultValue="elementary">
-            <option value="elementary">Елементарна математика</option>
+          <select id="topic" value={topicChoice} onChange={(event) => onTopicChoiceChange(event.target.value)}>
+            {topics.map((topic) => (
+              <option key={topic.id} value={topic.id}>
+                {topic.label}
+              </option>
+            ))}
           </select>
         </div>
       </div>

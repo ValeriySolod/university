@@ -14,6 +14,8 @@ export default function Trainer() {
         hidden={trainer.phase !== "setup"}
         modeChoice={trainer.modeChoice}
         onModeChoiceChange={trainer.setModeChoice}
+        topicChoice={trainer.topicChoice}
+        onTopicChoiceChange={trainer.setTopicChoice}
         onStart={trainer.startTraining}
         totalQuestions={trainer.totalQuestions}
       />

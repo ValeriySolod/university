@@ -54,6 +54,17 @@
               <span class="count-value">10</span>
               <span>завдань</span>
             </div>
+            <fieldset class="mode-picker">
+              <legend>Режим</legend>
+              <label>
+                <input type="radio" name="mode" value="classic" checked />
+                <span>Звичайний</span>
+              </label>
+              <label>
+                <input type="radio" name="mode" value="ultimate" />
+                <span>Ultimate ⚡</span>
+              </label>
+            </fieldset>
             <button class="button button-primary" id="start-button" type="button">Почати тренування</button>
           </div>
 
@@ -63,7 +74,10 @@
                 <p class="eyebrow" id="question-counter">Завдання 1 з 10</p>
                 <h2 id="trainer-title">Обчисли значення</h2>
               </div>
-              <span class="timer" id="timer" aria-live="off">00:00</span>
+              <div class="timers" aria-label="Час виконання">
+                <span class="timer"><small>Завдання</small><b id="question-timer">00:00</b></span>
+                <span class="timer"><small>Загалом</small><b id="timer">00:00</b></span>
+              </div>
             </div>
 
             <div
@@ -100,6 +114,10 @@
               <div class="stat">
                 <span class="stat-value" id="percent-stat">0%</span>
                 <span>точність</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value" id="total-time-stat">00:00</span>
+                <span>загальний час</span>
               </div>
             </div>
             <button class="button button-primary" id="restart-button" type="button">Спробувати ще раз</button>

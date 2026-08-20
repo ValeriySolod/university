@@ -7,7 +7,7 @@ An interactive Ukrainian-language mathematics trainer built with Next.js (App Ro
 - `/` is the NMT trainer.
 - A full NMT test contains **22 tasks** and lasts **60 minutes**.
 - **15 single-choice** tasks are worth **1 point** each.
-- **3 matching** tasks are worth **up to 4 points** each.
+- **3 matching** tasks are worth **up to 3 points** each.
 - **4 short-answer** tasks are worth **2 points** each.
 - The maximum score is **32 test points**.
 - The **100–200 rating** is derived from test points using an explicit official lookup table, and is **unavailable below 5 test points**.

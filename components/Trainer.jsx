@@ -16,8 +16,12 @@ export default function Trainer() {
         onModeChoiceChange={trainer.setModeChoice}
         topicChoice={trainer.topicChoice}
         onTopicChoiceChange={trainer.setTopicChoice}
+        difficultyChoice={trainer.difficultyChoice}
+        onDifficultyChoiceChange={trainer.setDifficultyChoice}
+        quantityChoice={trainer.quantityChoice}
+        onQuantityChoiceChange={trainer.setQuantityChoice}
         onStart={trainer.startTraining}
-        totalQuestions={trainer.totalQuestions}
+        emptyPoolMessage={trainer.emptyPoolMessage}
       />
 
       <QuizCard

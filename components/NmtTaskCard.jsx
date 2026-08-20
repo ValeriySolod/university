@@ -1,5 +1,6 @@
 import NmtTaskNavigator from "./NmtTaskNavigator";
 import NmtAnswerInput from "./NmtAnswerInput";
+import MarkToggleButton from "./MarkToggleButton";
 
 export default function NmtTaskCard({
   hidden,
@@ -15,6 +16,8 @@ export default function NmtTaskCard({
   confirmingSubmit,
   questionRegionRef,
   submitButtonRef,
+  isCurrentQuestionMarked,
+  onToggleCurrentQuestionMark,
   onAnswerChange,
   onGoToIndex,
   onNext,
@@ -46,9 +49,12 @@ export default function NmtTaskCard({
         onSelect={onGoToIndex}
       />
 
-      <p className="question" tabIndex={-1} ref={questionRegionRef}>
-        {question.text}
-      </p>
+      <div className="question-topline">
+        <p className="question" tabIndex={-1} ref={questionRegionRef}>
+          {question.text}
+        </p>
+        <MarkToggleButton marked={isCurrentQuestionMarked} onToggle={onToggleCurrentQuestionMark} />
+      </div>
 
       <NmtAnswerInput question={question} answer={answer} onChange={(nextAnswer) => onAnswerChange(question.id, nextAnswer)} />
 

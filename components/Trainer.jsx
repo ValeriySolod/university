@@ -35,6 +35,8 @@ export default function Trainer() {
         questionTimerText={trainer.questionTimerText}
         answersContainerRef={trainer.answersContainerRef}
         nextButtonRef={trainer.nextButtonRef}
+        isCurrentQuestionMarked={trainer.isCurrentQuestionMarked}
+        onToggleCurrentQuestionMark={trainer.toggleCurrentQuestionMark}
         onSelectAnswer={trainer.selectAnswer}
         onNext={trainer.goToNextQuestion}
       />

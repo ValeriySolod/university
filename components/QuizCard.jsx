@@ -1,3 +1,5 @@
+import MarkToggleButton from "./MarkToggleButton";
+
 export default function QuizCard({
   hidden,
   currentQuestion,
@@ -9,6 +11,8 @@ export default function QuizCard({
   questionTimerText,
   answersContainerRef,
   nextButtonRef,
+  isCurrentQuestionMarked,
+  onToggleCurrentQuestionMark,
   onSelectAnswer,
   onNext,
 }) {
@@ -48,7 +52,10 @@ export default function QuizCard({
         <span style={{ width: `${(currentQuestion / totalQuestions) * 100}%` }} />
       </div>
 
-      <p className="question">{question.text}</p>
+      <div className="question-topline">
+        <p className="question">{question.text}</p>
+        <MarkToggleButton marked={isCurrentQuestionMarked} onToggle={onToggleCurrentQuestionMark} />
+      </div>
       <div className="answers" role="group" aria-label="Варіанти відповіді" ref={answersContainerRef}>
         {question.answers.map((answer, index) => {
           let className = "answer";

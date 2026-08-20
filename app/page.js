@@ -1,6 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import Hero from "@/components/Hero";
-import Trainer from "@/components/Trainer";
+import NmtTrainer from "@/components/NmtTrainer";
 import SiteFooter from "@/components/SiteFooter";
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
       <SiteHeader />
       <main>
         <Hero />
-        <Trainer />
+        <NmtTrainer />
       </main>
       <SiteFooter />
     </div>

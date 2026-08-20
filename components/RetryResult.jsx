@@ -9,7 +9,7 @@ export default function RetryResult({ retryResult, onBackToList }) {
         ★
       </div>
       <p className="eyebrow">Повторення завершено</p>
-      <h2>
+      <h2 id="retry-result-title">
         {correctCount}/{total} правильних відповідей
       </h2>
       <p className="result-copy">Це повторення записано в історію окремою спробою й не змінює початковий результат.</p>

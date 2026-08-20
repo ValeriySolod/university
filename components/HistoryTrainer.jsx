@@ -7,11 +7,22 @@ import AttemptReview from "./AttemptReview";
 import RetrySession from "./RetrySession";
 import RetryResult from "./RetryResult";
 
+// The outer region's aria-labelledby must always resolve to a heading that
+// is actually mounted for the current view — each view renders a different
+// heading (or none, before this map added one), so the id is looked up per
+// view rather than hardcoded to the list view's "trainer-title".
+const REGION_LABEL_ID_BY_VIEW = Object.freeze({
+  list: "trainer-title",
+  review: "attempt-review-title",
+  retry: "trainer-title",
+  "retry-result": "retry-result-title",
+});
+
 export default function HistoryTrainer() {
   const history = useAttemptHistory();
 
   return (
-    <section className="trainer history-trainer" aria-labelledby="trainer-title">
+    <section className="trainer history-trainer" aria-labelledby={REGION_LABEL_ID_BY_VIEW[history.view]}>
       {history.view === "list" && (
         <>
           <MarkedQuestionsPanel

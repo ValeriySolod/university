@@ -6,7 +6,7 @@ Bounded increments toward the full NMT (ЗНО/НМТ) trainer described in [REA
 2. **[x] Pure scoring for 0–32 test points and official 100–200 rating conversion.**
 3. **[x] Full 22-task NMT test and 60-minute session behavior.**
 4. **[x] Move thematic training to /practice and add category, difficulty, and quantity filters.**
-5. **[ ] Add Redux Persist for the active session, settings, attempts, and topic statistics.**
+5. **[x] Add Redux Persist for the active session, settings, attempts, and topic statistics.**
 6. **[ ] Add attempt history, error review, marked tasks, and retry actions.**
 7. **[ ] Generate weak-topic training from persisted error statistics.**
 8. **[ ] Add an algebra/geometry formula reference rendered with KaTeX.**

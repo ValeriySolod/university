@@ -1,6 +1,21 @@
-# Math Sprint
+# University — NMT Math Trainer
 
-An interactive Ukrainian-language elementary mathematics trainer with ten multiple-choice questions, immediate explanations, live task and total timers, progress tracking, and final performance statistics.
+An interactive Ukrainian-language mathematics trainer built with Next.js (App Router), aimed at NMT (ЗНО/НМТ) preparation.
+
+## Product contract
+
+- `/` is the NMT trainer.
+- A full NMT test contains **22 tasks** and lasts **60 minutes**.
+- **15 single-choice** tasks are worth **1 point** each.
+- **3 matching** tasks are worth **up to 4 points** each.
+- **4 short-answer** tasks are worth **2 points** each.
+- The maximum score is **32 test points**.
+- The **100–200 rating** is derived from test points using an explicit official lookup table, and is **unavailable below 5 test points**.
+- `/practice` is separate topic practice (single-topic drills such as powers, roots, logarithms) and **must not show an NMT rating**.
+
+Implementation of the full 22-task session, official scoring, matching/short-answer UI, and `/practice` is delivered incrementally — see [ROADMAP.md](./ROADMAP.md) for the current status. The trainer currently available at `/` runs the existing single-choice practice modes described below while the NMT session is built out.
+
+## Current trainer modes
 
 Two interaction modes are available:
 
@@ -9,25 +24,16 @@ Two interaction modes are available:
 
 ## Run locally
 
-Built with Next.js (App Router).
-
 ```bash
 npm install
 npm run dev
 ```
 
-## Question set
+## Tests
 
-1. Order of operations: `48 ÷ 6 + 7 = 15`
-2. Percentages: `25% of 80 = 20`
-3. Powers: `3² + 4² = 25`
-4. Fractions and decimals: `0.75 = 3/4`
-5. Linear equations: `5x = 35`, so `x = 7`
-6. Square perimeter: a `36 cm` perimeter gives a `9 cm` side
-7. Number sequences: `2, 5, 8, 11, 14`
-8. Average speed: `180 km ÷ 3 h = 60 km/h`
-9. Like terms: `4a + 3a − 2a = 5a`
-10. Rectangle area: `7 cm × 5 cm = 35 cm²`
+```bash
+npm test
+```
 
 ## Deployment
 

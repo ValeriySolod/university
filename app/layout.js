@@ -1,4 +1,5 @@
 import "./styles.css";
+import StoreProvider from "@/components/StoreProvider";
 
 export const metadata = {
   title: "НМТ — математичний тренажер",
@@ -22,7 +23,9 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <StoreProvider>{children}</StoreProvider>
+      </body>
     </html>
   );
 }

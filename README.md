@@ -34,6 +34,25 @@ Question selection is pure logic in `lib/practiceQuestions.js`: it generates or 
 
 Both `/` and `/practice` are reachable from the header navigation on every page.
 
+## Persistence and reload behavior
+
+State is centralized in a Redux Toolkit store (`lib/store/`) and persisted to `localStorage` via Redux Persist, wired in at the app root by `components/StoreProvider.jsx` so `/` and `/practice` share one persisted store. No page, component, or trainer hook touches `localStorage` directly — it stays behind the store's persistence configuration.
+
+Four slices keep state clearly separated:
+
+- **`nmtSession`** (`lib/store/nmtSessionSlice.js`) — the active NMT test: phase, current task index, answers by question id, the start timestamp, and the original absolute deadline. Starting or restarting the test atomically replaces this slice.
+- **`practiceSettings`** (`lib/store/practiceSettingsSlice.js`) — the selected practice category, difficulty, quantity, and Classic/Ultimate mode.
+- **`attempts`** (`lib/store/attemptsSlice.js`) — one compact, immutable record per completed NMT or practice attempt (id, trainer type, timestamp, selected settings when applicable, points, duration, and per-question outcomes).
+- **`topicStats`** (`lib/store/topicStatsSlice.js`) — aggregate attempted/correct/incorrect counts per practice category, updated from completed practice outcomes.
+
+**Reloading an active NMT test** restores its answers, current task, and original absolute deadline — the 60-minute limit is never reset or extended. If the restored deadline has already passed, the session is submitted once through the normal scoring path (`lib/nmtSession.js` / `lib/nmtScore.js`), rather than resuming a countdown from an expired clock. Completing a test persists its result and an attempt record; repeated submission, timer ticks, remounts, or React Strict Mode never produce a duplicate attempt (idempotent by session id via `lib/store/thunks.js`).
+
+**Reloading `/practice`** restores the previously selected category, difficulty, quantity, and mode, validated against the app's current option lists — a stale or unrecognized selection (e.g. a removed category) falls back to defaults instead of restoring something the page can no longer offer. Finishing a practice session appends one attempt record and updates topic statistics from its outcomes.
+
+The persisted schema carries an explicit version (`lib/store/persistConfig.js`). A version mismatch discards the persisted blob (no migration path exists yet, this being the first schema version), and every slice is independently validated on every rehydration — invalid, incomplete, or structurally incompatible data for one slice falls back to that slice's defaults without affecting the others or crashing the app. The store is created lazily behind a client-side provider so Next.js server rendering and hydration are unaffected.
+
+This increment does not add attempt-history, error-review, marked-task, retry, or weak-topic UI — the persisted data is groundwork for later roadmap items.
+
 ## Run locally
 
 ```bash

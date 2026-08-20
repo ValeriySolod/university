@@ -21,6 +21,9 @@ export default function SiteHeader() {
         <Link href="/practice" aria-current={pathname === "/practice" ? "page" : undefined}>
           Практика
         </Link>
+        <Link href="/history" aria-current={pathname === "/history" ? "page" : undefined}>
+          Історія
+        </Link>
       </nav>
     </header>
   );

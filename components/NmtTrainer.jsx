@@ -26,6 +26,8 @@ export default function NmtTrainer() {
         confirmingSubmit={session.confirmingSubmit}
         questionRegionRef={session.questionRegionRef}
         submitButtonRef={session.submitButtonRef}
+        isCurrentQuestionMarked={session.isCurrentQuestionMarked}
+        onToggleCurrentQuestionMark={session.toggleCurrentQuestionMark}
         onAnswerChange={session.setAnswer}
         onGoToIndex={session.goToIndex}
         onNext={session.goNext}

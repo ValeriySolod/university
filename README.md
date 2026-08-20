@@ -13,14 +13,16 @@ An interactive Ukrainian-language mathematics trainer built with Next.js (App Ro
 - The **100–200 rating** is derived from test points using an explicit official lookup table, and is **unavailable below 5 test points**.
 - `/practice` is separate topic practice (single-topic drills such as powers, roots, logarithms) and **must not show an NMT rating**.
 
-Official scoring (0–32 test points and the 100–200 rating conversion) is implemented as pure domain logic in `lib/nmtScore.js`, but is not yet integrated into the full session UI. Implementation of the full 22-task session, matching/short-answer UI, and `/practice` is delivered incrementally — see [ROADMAP.md](./ROADMAP.md) for the current status. The trainer currently available at `/` runs the existing single-choice practice modes described below while the NMT session is built out.
+`/` now runs the full 22-task NMT session end to end:
 
-## Current trainer modes
+- The session starts from an intro screen describing the 22 tasks and the 60-minute limit, then runs a 60:00 countdown based on an absolute deadline (delayed timers or an inactive tab never extend the session), and auto-submits once time runs out.
+- All 22 tasks are reachable at any point through a task navigator that distinguishes answered, unanswered, and the current task; Previous/Next controls step through tasks in order, and the last task offers submission.
+- Single-choice, matching, and short-answer tasks each have a dedicated answer interface; answers are kept per-task, so navigating away and back restores what was entered.
+- Correctness, correct answers, explanations, points, and rating are never shown while the test is active.
+- Submitting with unanswered tasks remaining requires explicit confirmation.
+- The result screen shows official test points out of 32 (via `lib/nmtScore.js`, not proportional scoring), the 100–200 rating when available, an explicit "rating unavailable" state below 5 test points, answered/unanswered counts, and elapsed time.
 
-Two interaction modes are available:
-
-- **Classic** keeps the explanation visible until the learner clicks the next button.
-- **Ultimate** shows the explanation briefly and advances automatically after each answer.
+`/practice` is not implemented yet. The existing topic-practice generators and single-choice practice UI (`lib/useMathTrainer.js`, `components/Trainer.jsx`, `components/SetupCard.jsx`, etc.) remain in the codebase, unused by `/`, for the next roadmap item to move to `/practice`. See [ROADMAP.md](./ROADMAP.md) for the current status.
 
 ## Run locally
 

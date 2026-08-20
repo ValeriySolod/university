@@ -53,7 +53,7 @@ export default function QuizCard({
         {question.answers.map((answer, index) => {
           let className = "answer";
           if (isAnswered) {
-            if (index === question.correct) className += " correct";
+            if (index === question.correctIndex) className += " correct";
             else if (index === answerState.selectedIndex) className += " incorrect";
           }
           return (

@@ -1,71 +1,71 @@
 # University — NMT Math Trainer
 
-An interactive Ukrainian-language mathematics trainer built with Next.js (App Router), aimed at NMT (ЗНО/НМТ) preparation.
+Інтерактивний тренажер з математики українською мовою, побудований на Next.js (App Router), орієнтований на підготовку до НМТ (ЗНО/НМТ).
 
-## Product contract
+## Контракт продукту
 
-- `/` is the NMT trainer.
-- A full NMT test contains **22 tasks** and lasts **60 minutes**.
-- **15 single-choice** tasks are worth **1 point** each.
-- **3 matching** tasks are worth **up to 3 points** each.
-- **4 short-answer** tasks are worth **2 points** each.
-- The maximum score is **32 test points**.
-- The **100–200 rating** is derived from test points using an explicit official lookup table, and is **unavailable below 5 test points**.
-- `/practice` is separate topic practice (single-topic drills such as powers, roots, logarithms) and **must not show an NMT rating**.
+- `/` — це тренажер НМТ.
+- Повний тест НМТ містить **22 завдання** і триває **60 хвилин**.
+- **15 завдань з вибором однієї відповіді** оцінюються в **1 бал** кожне.
+- **3 завдання на встановлення відповідності** оцінюються **до 3 балів** кожне.
+- **4 завдання з короткою відповіддю** оцінюються в **2 бали** кожне.
+- Максимальний бал — **32 тестових бали**.
+- **Рейтинг за шкалою 100–200** визначається з тестових балів за допомогою явної офіційної таблиці відповідності та **недоступний, якщо набрано менше 5 тестових балів**.
+- `/practice` — це окреме тематичне тренування (тренування за однією темою, наприклад степені, корені, логарифми), і воно **не повинно показувати рейтинг НМТ**.
 
-`/` now runs the full 22-task NMT session end to end:
+`/` тепер повністю виконує повну сесію НМТ з 22 завдань від початку до кінця:
 
-- The session starts from an intro screen describing the 22 tasks and the 60-minute limit, then runs a 60:00 countdown based on an absolute deadline (delayed timers or an inactive tab never extend the session), and auto-submits once time runs out.
-- All 22 tasks are reachable at any point through a task navigator that distinguishes answered, unanswered, and the current task; Previous/Next controls step through tasks in order, and the last task offers submission.
-- Single-choice, matching, and short-answer tasks each have a dedicated answer interface; answers are kept per-task, so navigating away and back restores what was entered.
-- Correctness, correct answers, explanations, points, and rating are never shown while the test is active.
-- Submitting with unanswered tasks remaining requires explicit confirmation.
-- The result screen shows official test points out of 32 (via `lib/nmtScore.js`, not proportional scoring), the 100–200 rating when available, an explicit "rating unavailable" state below 5 test points, answered/unanswered counts, and elapsed time.
+- Сесія починається з вступного екрана, який описує 22 завдання та ліміт у 60 хвилин, після чого запускається зворотний відлік 60:00 на основі абсолютного дедлайну (затримки таймера чи неактивна вкладка ніколи не подовжують сесію), і сесія автоматично завершується, коли час вичерпано.
+- Усі 22 завдання доступні в будь-який момент через навігатор завдань, який розрізняє відповідені, невідповідені та поточне завдання; елементи керування "Попереднє"/"Наступне" дозволяють переходити між завданнями по порядку, а на останньому завданні пропонується здати тест.
+- Завдання з вибором однієї відповіді, на встановлення відповідності та з короткою відповіддю мають окремий інтерфейс введення відповіді; відповіді зберігаються для кожного завдання окремо, тож перехід до іншого завдання й назад відновлює введене раніше.
+- Правильність, правильні відповіді, пояснення, бали та рейтинг ніколи не показуються, поки тест триває.
+- Здача тесту з невідповіданими завданнями, що залишилися, вимагає явного підтвердження.
+- Екран результатів показує офіційні тестові бали з 32 (через `lib/nmtScore.js`, а не пропорційне оцінювання), рейтинг за шкалою 100–200, коли він доступний, явний стан "рейтинг недоступний" при результаті нижче 5 тестових балів, кількість відповіданих/невідповіданих завдань і витрачений час.
 
-`/practice` now runs the thematic single-choice trainer, with setup filters for:
+`/practice` тепер запускає тематичний тренажер з вибором однієї відповіді, з фільтрами налаштування для:
 
-- **category** — every category defined in `lib/topics.js` (elementary mathematics, powers, roots, logarithms);
-- **difficulty** — all, basic, intermediate, or advanced;
-- **quantity** — 10, 20, or 30 questions.
+- **категорії** — кожна категорія, визначена в `lib/topics.js` (елементарна математика, степені, корені, логарифми);
+- **складності** — усі, базова, середня або підвищена;
+- **кількості** — 10, 20 або 30 запитань.
 
-Question selection is pure logic in `lib/practiceQuestions.js`: it generates or filters strictly within the chosen category and difficulty (never backfilling from another category or difficulty), and — for the generated categories (powers, roots, logarithms) — repeats generation batches until the requested quantity is reached, assigning each combined question a unique, stable session id. The elementary bank is a fixed set explicitly tagged with a difficulty per question. If a category/difficulty combination has no matching questions, `/practice` stays on setup and shows a Ukrainian message instead of starting a broken session.
+Вибір запитань — це чиста логіка в `lib/practiceQuestions.js`: вона генерує або фільтрує запитання строго в межах обраної категорії та складності (ніколи не підбираючи запитання з іншої категорії чи складності), і — для згенерованих категорій (степені, корені, логарифми) — повторює пакети генерації, поки не буде досягнуто потрібної кількості, присвоюючи кожному об'єднаному запитанню унікальний, стабільний ідентифікатор сесії. Банк елементарної математики — це фіксований набір запитань, кожне з яких явно позначене складністю. Якщо для комбінації категорія/складність немає відповідних запитань, `/practice` залишається на екрані налаштування і показує повідомлення українською замість запуску непрацездатної сесії.
 
-`/practice` keeps the existing Classic and Ultimate modes, immediate per-answer correctness and explanations, and a result screen with accuracy, correct-answer count, total time, and average answer time — but **no `/200` score and no NMT rating**, matching the product contract above.
+`/practice` зберігає наявні режими Class і Ultimate, миттєву правильність відповіді та пояснення після кожної відповіді, а також екран результатів з точністю, кількістю правильних відповідей, загальним часом і середнім часом на відповідь — але **без оцінки `/200` і без рейтингу НМТ**, відповідно до контракту продукту, описаного вище.
 
-Both `/` and `/practice` are reachable from the header navigation on every page.
+Обидві сторінки — `/` та `/practice` — доступні через навігацію в шапці на кожній сторінці.
 
-## Persistence and reload behavior
+## Збереження стану та поведінка при перезавантаженні
 
-State is centralized in a Redux Toolkit store (`lib/store/`) and persisted to `localStorage` via Redux Persist, wired in at the app root by `components/StoreProvider.jsx` so `/` and `/practice` share one persisted store. No page, component, or trainer hook touches `localStorage` directly — it stays behind the store's persistence configuration.
+Стан централізовано у сховищі Redux Toolkit (`lib/store/`) і зберігається в `localStorage` через Redux Persist, підключений у корені застосунку через `components/StoreProvider.jsx`, тож `/` та `/practice` використовують спільне збережене сховище. Жодна сторінка, компонент чи хук тренажера не звертається до `localStorage` напряму — це приховано за конфігурацією збереження сховища.
 
-Four slices keep state clearly separated:
+Чотири зрізи чітко розділяють стан:
 
-- **`nmtSession`** (`lib/store/nmtSessionSlice.js`) — the active NMT test: phase, current task index, answers by question id, the start timestamp, and the original absolute deadline. Starting or restarting the test atomically replaces this slice.
-- **`practiceSettings`** (`lib/store/practiceSettingsSlice.js`) — the selected practice category, difficulty, quantity, and Classic/Ultimate mode.
-- **`attempts`** (`lib/store/attemptsSlice.js`) — one compact, immutable record per completed NMT or practice attempt (id, trainer type, timestamp, selected settings when applicable, points, duration, and per-question outcomes).
-- **`topicStats`** (`lib/store/topicStatsSlice.js`) — aggregate attempted/correct/incorrect counts per practice category, updated from completed practice outcomes.
+- **`nmtSession`** (`lib/store/nmtSessionSlice.js`) — активний тест НМТ: фаза, індекс поточного завдання, відповіді за ідентифікатором запитання, час початку та вихідний абсолютний дедлайн. Початок або перезапуск тесту атомарно замінює цей зріз.
+- **`practiceSettings`** (`lib/store/practiceSettingsSlice.js`) — обрана категорія практики, складність, кількість і режим Classic/Ultimate.
+- **`attempts`** (`lib/store/attemptsSlice.js`) — один компактний, незмінний запис на кожну завершену спробу НМТ або тренування (ідентифікатор, тип тренажера, час, обрані налаштування, якщо застосовно, бали, тривалість і результати за кожним запитанням).
+- **`topicStats`** (`lib/store/topicStatsSlice.js`) — сукупна кількість спроб, правильних і неправильних відповідей за категорією тренування, що оновлюється на основі результатів завершених тренувань.
 
-**Reloading an active NMT test** restores its answers, current task, and original absolute deadline — the 60-minute limit is never reset or extended. If the restored deadline has already passed, the session is submitted once through the normal scoring path (`lib/nmtSession.js` / `lib/nmtScore.js`), rather than resuming a countdown from an expired clock. Completing a test persists its result and an attempt record; repeated submission, timer ticks, remounts, or React Strict Mode never produce a duplicate attempt (idempotent by session id via `lib/store/thunks.js`).
+**Перезавантаження активного тесту НМТ** відновлює його відповіді, поточне завдання та вихідний абсолютний дедлайн — 60-хвилинний ліміт ніколи не скидається й не подовжується. Якщо відновлений дедлайн уже минув, сесія завершується один раз через звичайний шлях оцінювання (`lib/nmtSession.js` / `lib/nmtScore.js`), а не відновлює відлік з простроченого годинника. Завершення тесту зберігає його результат і запис спроби; повторна здача, тіки таймера, повторні монтування чи React Strict Mode ніколи не створюють дубльований запис спроби (ідемпотентність за ідентифікатором сесії через `lib/store/thunks.js`).
 
-**Reloading `/practice`** restores the previously selected category, difficulty, quantity, and mode, validated against the app's current option lists — a stale or unrecognized selection (e.g. a removed category) falls back to defaults instead of restoring something the page can no longer offer. Finishing a practice session appends one attempt record and updates topic statistics from its outcomes.
+**Перезавантаження `/practice`** відновлює раніше обрану категорію, складність, кількість і режим, звірені з поточними списками опцій застосунку — застаріла чи нерозпізнана опція (наприклад, видалена категорія) призводить до відкату на значення за замовчуванням, а не до відновлення того, що сторінка вже не може запропонувати. Завершення сесії тренування додає один запис спроби та оновлює статистику за темами на основі її результатів.
 
-The persisted schema carries an explicit version (`lib/store/persistConfig.js`). A version mismatch discards the persisted blob (no migration path exists yet, this being the first schema version), and every slice is independently validated on every rehydration — invalid, incomplete, or structurally incompatible data for one slice falls back to that slice's defaults without affecting the others or crashing the app. The store is created lazily behind a client-side provider so Next.js server rendering and hydration are unaffected.
+Збережена схема має явну версію (`lib/store/persistConfig.js`). Невідповідність версії призводить до відкидання збереженого блоку даних (шляху міграції поки що немає, оскільки це перша версія схеми), і кожен зріз незалежно перевіряється при кожній регідратації — некоректні, неповні або структурно несумісні дані для одного зрізу відкочуються до значень за замовчуванням цього зрізу, не впливаючи на інші зрізи та не спричиняючи збій застосунку. Сховище створюється лениво за клієнтським провайдером, тож серверний рендеринг і гідратація Next.js не порушуються.
 
-This increment does not add attempt-history, error-review, marked-task, retry, or weak-topic UI — the persisted data is groundwork for later roadmap items.
+Цей приріст не додає історію спроб, перегляд помилок, позначені завдання чи повторні спроби — збережені дані є підготовчим кроком для подальших пунктів розвитку.
 
-## Run locally
+## Локальний запуск
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Tests
+## Тести
 
 ```bash
 npm test
 ```
 
-## Deployment
+## Розгортання
 
-The project is a Next.js app and deploys directly from the repository root on Vercel (build command `next build`).
+Проєкт — це застосунок Next.js, який розгортається безпосередньо з кореня репозиторію на Vercel (команда збірки `next build`).

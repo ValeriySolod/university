@@ -22,7 +22,17 @@ An interactive Ukrainian-language mathematics trainer built with Next.js (App Ro
 - Submitting with unanswered tasks remaining requires explicit confirmation.
 - The result screen shows official test points out of 32 (via `lib/nmtScore.js`, not proportional scoring), the 100–200 rating when available, an explicit "rating unavailable" state below 5 test points, answered/unanswered counts, and elapsed time.
 
-`/practice` is not implemented yet. The existing topic-practice generators and single-choice practice UI (`lib/useMathTrainer.js`, `components/Trainer.jsx`, `components/SetupCard.jsx`, etc.) remain in the codebase, unused by `/`, for the next roadmap item to move to `/practice`. See [ROADMAP.md](./ROADMAP.md) for the current status.
+`/practice` now runs the thematic single-choice trainer, with setup filters for:
+
+- **category** — every category defined in `lib/topics.js` (elementary mathematics, powers, roots, logarithms);
+- **difficulty** — all, basic, intermediate, or advanced;
+- **quantity** — 10, 20, or 30 questions.
+
+Question selection is pure logic in `lib/practiceQuestions.js`: it generates or filters strictly within the chosen category and difficulty (never backfilling from another category or difficulty), and — for the generated categories (powers, roots, logarithms) — repeats generation batches until the requested quantity is reached, assigning each combined question a unique, stable session id. The elementary bank is a fixed set explicitly tagged with a difficulty per question. If a category/difficulty combination has no matching questions, `/practice` stays on setup and shows a Ukrainian message instead of starting a broken session.
+
+`/practice` keeps the existing Classic and Ultimate modes, immediate per-answer correctness and explanations, and a result screen with accuracy, correct-answer count, total time, and average answer time — but **no `/200` score and no NMT rating**, matching the product contract above.
+
+Both `/` and `/practice` are reachable from the header navigation on every page.
 
 ## Run locally
 

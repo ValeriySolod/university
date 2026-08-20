@@ -3,7 +3,6 @@ export default function ResultCard({ hidden, resultData, restartButtonRef, onRes
     correctAnswers: 0,
     total: 10,
     percent: 0,
-    score: 0,
     averageTime: 0,
     title: "Чудовий результат!",
     copy: "",
@@ -22,10 +21,6 @@ export default function ResultCard({ hidden, resultData, restartButtonRef, onRes
       <h2>{data.title}</h2>
       <p className="result-copy">{data.copy}</p>
       <div className="stats-grid">
-        <div className="stat">
-          <span className="stat-value">{data.score}/200</span>
-          <span>підсумковий бал</span>
-        </div>
         <div className="stat">
           <span className="stat-value">
             {data.correctAnswers}/{data.total}

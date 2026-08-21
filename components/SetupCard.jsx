@@ -20,6 +20,9 @@ export default function SetupCard({
   onQuantityChoiceChange,
   onStart,
   emptyPoolMessage,
+  hasWeakTopic,
+  onStartWeakTopic,
+  weakTopicMessage,
 }) {
   return (
     <div className="setup-card" hidden={hidden}>
@@ -97,8 +100,20 @@ export default function SetupCard({
       <button className="button button-primary" type="button" onClick={onStart}>
         Почати тренування
       </button>
+      <button
+        className="button button-secondary"
+        type="button"
+        onClick={onStartWeakTopic}
+        disabled={!hasWeakTopic}
+        aria-describedby={weakTopicMessage ? "weak-topic-message" : undefined}
+      >
+        Тренувати слабку тему
+      </button>
       <p className="setup-empty-message" role="alert" hidden={!emptyPoolMessage}>
         {emptyPoolMessage}
+      </p>
+      <p className="setup-empty-message" id="weak-topic-message" hidden={!weakTopicMessage}>
+        {weakTopicMessage}
       </p>
     </div>
   );

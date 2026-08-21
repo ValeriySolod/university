@@ -265,9 +265,11 @@ select {
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
-.button:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.button:hover:not(:disabled) { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
 .button:focus-visible, .answer:focus-visible, select:focus-visible { outline: 4px solid rgba(169, 152, 255, 0.5); outline-offset: 3px; }
+.button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 .button-primary { background: var(--lime); }
+.button-secondary { background: var(--card); }
 
 .quiz-card, .result-card { max-width: 900px; margin: 32px auto 0; padding: clamp(24px, 5vw, 56px); }
 .quiz-topline { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }

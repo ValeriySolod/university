@@ -22,6 +22,9 @@ export default function Trainer() {
         onQuantityChoiceChange={trainer.setQuantityChoice}
         onStart={trainer.startTraining}
         emptyPoolMessage={trainer.emptyPoolMessage}
+        hasWeakTopic={trainer.hasWeakTopic}
+        onStartWeakTopic={trainer.startWeakTopicTraining}
+        weakTopicMessage={trainer.weakTopicMessage}
       />
 
       <QuizCard

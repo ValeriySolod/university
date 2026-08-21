@@ -1,6 +1,7 @@
 "use client";
 
 import { useNmtSession } from "@/lib/useNmtSession";
+import Hero from "./Hero";
 import NmtIntroCard from "./NmtIntroCard";
 import NmtTaskCard from "./NmtTaskCard";
 import NmtResultCard from "./NmtResultCard";
@@ -9,8 +10,10 @@ export default function NmtTrainer() {
   const session = useNmtSession();
 
   return (
-    <section className="trainer" aria-labelledby="trainer-title">
-      <NmtIntroCard hidden={session.phase !== "intro"} onStart={session.start} />
+    <>
+      {session.phase === "intro" && <Hero />}
+      <section className="trainer" aria-labelledby="trainer-title">
+        <NmtIntroCard hidden={session.phase !== "intro"} onStart={session.start} />
 
       <NmtTaskCard
         hidden={session.phase !== "active"}
@@ -37,7 +40,8 @@ export default function NmtTrainer() {
         onCancelSubmit={session.cancelSubmit}
       />
 
-      <NmtResultCard hidden={session.phase !== "result"} resultData={session.resultData} onRestart={session.start} />
-    </section>
+        <NmtResultCard hidden={session.phase !== "result"} resultData={session.resultData} onRestart={session.start} />
+      </section>
+    </>
   );
 }

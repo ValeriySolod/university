@@ -9,5 +9,5 @@ Bounded increments toward the full NMT (ЗНО/НМТ) trainer described in [REA
 5. **[x] Add Redux Persist for the active session, settings, attempts, and topic statistics.**
 6. **[x] Add attempt history, error review, marked tasks, and retry actions.**
 7. **[x] Generate weak-topic training from persisted error statistics.**
-8. **[ ] Add an algebra/geometry formula reference rendered with KaTeX.**
+8. **[x] Add an algebra/geometry formula reference rendered with KaTeX.**
 9. **[ ] Add accessible light and dark display themes.**

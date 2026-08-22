@@ -1,4 +1,4 @@
-import { formatCountdown } from "@/lib/nmtSession";
+import { clampElapsedMs, formatCountdown } from "@/lib/nmtSession";
 
 export default function NmtResultCard({ hidden, resultData, onRestart }) {
   const data = resultData ?? {
@@ -37,7 +37,7 @@ export default function NmtResultCard({ hidden, resultData, onRestart }) {
           <span>без відповіді</span>
         </div>
         <div className="stat">
-          <span className="stat-value">{formatCountdown(data.elapsedMs)}</span>
+          <span className="stat-value">{formatCountdown(clampElapsedMs(data.elapsedMs))}</span>
           <span>витрачений час</span>
         </div>
       </div>

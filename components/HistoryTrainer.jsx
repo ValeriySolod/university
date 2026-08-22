@@ -35,7 +35,7 @@ export default function HistoryTrainer() {
           <h2 id="trainer-title" className="visually-hidden">
             Історія спроб
           </h2>
-          <AttemptHistoryList attempts={history.attempts} onOpenAttempt={history.openAttempt} />
+          <AttemptHistoryList attempts={history.attempts} onOpenAttempt={history.openAttempt} onClearHistory={history.clearHistory} />
         </>
       )}
 

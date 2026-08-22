@@ -430,6 +430,11 @@ footer { min-height: 84px; border-top: 1px solid var(--line); }
 .marked-panel-item-text { margin: 0; font-weight: 700; }
 .marked-panel-item-actions { display: flex; gap: 8px; }
 
+.history-list-header { display: flex; justify-content: flex-end; margin-bottom: 14px; }
+.history-clear-button { min-height: 44px; padding: 0 20px; }
+.history-clear-confirm { margin-bottom: 20px; padding: 17px 20px; border-left: 5px solid var(--danger); border-radius: 4px 14px 14px 4px; background: #fff0ee; line-height: 1.55; }
+.history-clear-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+
 .history-list { display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; list-style: none; }
 .history-item-button {
   display: block;
@@ -483,6 +488,9 @@ footer { min-height: 84px; border-top: 1px solid var(--line); }
 @media (max-width: 760px) {
   .outcome-row-top { flex-direction: column; }
   .marked-panel-item { flex-direction: column; align-items: flex-start; }
+  .history-list-header { justify-content: stretch; }
+  .history-clear-button { width: 100%; }
+  .history-clear-actions { flex-direction: column; }
 }
 
 .formulas-title { margin: 32px 0 8px; font-size: clamp(1.9rem, 4vw, 2.8rem); letter-spacing: -0.045em; }
